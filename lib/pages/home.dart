@@ -34,6 +34,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Gerenciado de Finanças'),
+      ),
       body: SingleChildScrollView(
         child: Center(
           child: Column(

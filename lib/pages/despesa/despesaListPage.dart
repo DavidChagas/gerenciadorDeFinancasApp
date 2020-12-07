@@ -135,9 +135,10 @@ class _DespesaListPageState extends State<DespesaListPage> {
         ]),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: _addDespesa,
-          label: Icon(Icons.add),
+          label: Text('Adicionar Despesa'),
           backgroundColor: Colors.blue,
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         bottomNavigationBar: Menu(),
       );
     } else {
@@ -146,9 +147,10 @@ class _DespesaListPageState extends State<DespesaListPage> {
             child: Text('Você não possui nenhuma despesa cadastrada ainda :)')),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: _addDespesa,
-          label: Icon(Icons.add),
+          label: Text('Adicionar Despesa'),
           backgroundColor: Colors.blue,
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         bottomNavigationBar: Menu(),
       );
     }

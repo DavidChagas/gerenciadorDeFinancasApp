@@ -131,9 +131,10 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
         ]),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: _addReceita,
-          label: Icon(Icons.add),
+          label: Text('Adicionar Receita'),
           backgroundColor: Colors.blue,
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         bottomNavigationBar: Menu(),
       );
     } else {
@@ -142,9 +143,10 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
             child: Text('Você não possui nenhuma receita cadastrada ainda :(')),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: _addReceita,
-          label: Icon(Icons.add),
+          label: Text('Adicionar Receita'),
           backgroundColor: Colors.blue,
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         bottomNavigationBar: Menu(),
       );
     }

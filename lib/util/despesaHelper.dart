@@ -78,7 +78,7 @@ class DespesaHelper {
     return listDespesa;
   }
 
-  Future<List> totalDespesas(mes) async {
+  Future<List> totalDespesas() async {
     Database dbDespesa = await db;
     List total = await dbDespesa.rawQuery(
         "SELECT SUM( REPLACE([valorCol],'R\$','') ) AS [total] FROM $despesaTable");

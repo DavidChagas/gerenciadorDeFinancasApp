@@ -17,11 +17,20 @@ class DespesaListPage extends StatefulWidget {
 
 class _DespesaListPageState extends State<DespesaListPage> {
   List<Despesa> lista = new List();
+  String total;
 
   @override
   void initState() {
     super.initState();
+    getTotalDespesas();
     obterTodos();
+  }
+
+  getTotalDespesas() {
+    DespesaHelper()
+        .totalDespesas()
+        .then((res) => {total = res[0]['total'].toStringAsFixed(2)})
+        .catchError((e) => {print(e)});
   }
 
   void obterTodos() {
@@ -63,8 +72,11 @@ class _DespesaListPageState extends State<DespesaListPage> {
         () => {
               DespesaHelper()
                   .excluir(obj.id)
-                  .then((value) =>
-                      {Dialogos.showToastSuccess('Excluído'), obterTodos()})
+                  .then((value) => {
+                        Dialogos.showToastSuccess('Excluído'),
+                        obterTodos(),
+                        getTotalDespesas()
+                      })
                   .catchError((e) => {
                         print(e),
                         Dialogos.showToastError(e.toString()),
@@ -79,38 +91,48 @@ class _DespesaListPageState extends State<DespesaListPage> {
         appBar: AppBar(
           title: Text('Despesas'),
         ),
-        body: Center(
-          child: ListView(
-            padding: EdgeInsets.all(10.0),
-            scrollDirection: Axis.vertical,
-            children: lista
-                .map((data) => ListTile(
-                    leading: Icon(Icons.money),
-                    title: Text(data.valor),
-                    subtitle: Text(DateFormat('dd/MM/yyyy').format(
-                        DateTime.parse(
-                            data.data.replaceAll('-', '').toString()))),
-                    onTap: () => selecionarDespesa(data),
-                    trailing: Container(
-                      width: 100,
-                      child: Row(
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.edit),
-                            color: Colors.blue,
-                            onPressed: () => selecionarDespesa(data),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.delete),
-                            color: Colors.red,
-                            onPressed: () => _excluir(data),
-                          )
-                        ],
-                      ),
-                    )))
-                .toList(),
+        body: Column(children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Text(
+              'Despesa total R\$ $total',
+              style: TextStyle(fontSize: 20),
+            ),
           ),
-        ),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.all(10.0),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: lista
+                  .map((data) => ListTile(
+                      leading: Icon(Icons.money),
+                      title: Text(data.valor),
+                      subtitle: Text(DateFormat('dd/MM/yyyy').format(
+                          DateTime.parse(
+                              data.data.replaceAll('-', '').toString()))),
+                      onTap: () => selecionarDespesa(data),
+                      trailing: Container(
+                        width: 100,
+                        child: Row(
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(Icons.edit),
+                              color: Colors.blue,
+                              onPressed: () => selecionarDespesa(data),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              color: Colors.red,
+                              onPressed: () => _excluir(data),
+                            )
+                          ],
+                        ),
+                      )))
+                  .toList(),
+            ),
+          )
+        ]),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: _addDespesa,
           label: Icon(Icons.add),

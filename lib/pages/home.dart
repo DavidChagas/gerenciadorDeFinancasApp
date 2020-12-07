@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
 
   getTotalDespesas() {
     return DespesaHelper()
-        .totalDespesas('05')
+        .totalDespesas()
         .then((res) => {print(res)})
         .catchError((e) => {print(e)});
   }

@@ -16,18 +16,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Despesa objDespesa;
-  num totalDespesas = 100;
+  double totalDespesas = 100.00;
   num totalReceitas = 200;
 
   @override
   void initState() {
     super.initState();
+    getTotalDespesas();
   }
 
   getTotalDespesas() {
-    return DespesaHelper()
+    DespesaHelper()
         .totalDespesas()
-        .then((res) => {print(res)})
+        .then((res) => {totalDespesas = res[0]['total']})
         .catchError((e) => {print(e)});
   }
 
@@ -42,7 +43,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: <Widget>[
               Padding(
-                child: Text('Balanço Semanal', style: TextStyle(fontSize: 20)),
+                child: Text('Resumo Mensal', style: TextStyle(fontSize: 20)),
                 padding: EdgeInsets.fromLTRB(0, 100, 0, 10),
               ),
               Container(

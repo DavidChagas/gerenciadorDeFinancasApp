@@ -58,15 +58,15 @@ class _MenuState extends State<Menu> {
       onSelectTab: (index) => alteraIndex(index),
       items: [
         FFNavigationBarItem(
-          iconData: Icons.calendar_today,
+          iconData: Icons.trending_down,
           label: 'Despesas',
         ),
         FFNavigationBarItem(
-          iconData: Icons.people,
+          iconData: Icons.donut_small,
           label: 'Home',
         ),
         FFNavigationBarItem(
-          iconData: Icons.attach_money,
+          iconData: Icons.trending_up,
           label: 'Receitas',
         ),
       ],

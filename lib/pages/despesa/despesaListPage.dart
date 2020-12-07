@@ -106,7 +106,7 @@ class _DespesaListPageState extends State<DespesaListPage> {
               shrinkWrap: true,
               children: lista
                   .map((data) => ListTile(
-                      leading: Icon(Icons.money),
+                      leading: Icon(Icons.attach_money),
                       title: Text(data.valor),
                       subtitle: Text(DateFormat('dd/MM/yyyy').format(
                           DateTime.parse(

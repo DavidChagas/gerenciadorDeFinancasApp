@@ -43,7 +43,7 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
   }
 
   void montaFiltro() {
-    lista.forEach((receita) => {print(receita.data)});
+    lista.forEach((receita) => {});
   }
 
   void _addReceita() async {
@@ -102,7 +102,7 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
               scrollDirection: Axis.vertical,
               children: lista
                   .map((data) => ListTile(
-                      leading: Icon(Icons.money),
+                      leading: Icon(Icons.attach_money),
                       title: Text(data.valor),
                       subtitle: Text(DateFormat('dd/MM/yyyy').format(
                           DateTime.parse(

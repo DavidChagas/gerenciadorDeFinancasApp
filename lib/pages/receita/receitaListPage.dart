@@ -78,26 +78,29 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
             scrollDirection: Axis.vertical,
             children: lista
                 .map((data) => ListTile(
-                      leading: Icon(Icons.money),
-                      title: Text(DateFormat('dd/MM/yyyy').format(
-                          DateTime.parse(
-                              data.data.replaceAll('-', '').toString()))),
-                      onTap: () => selecionarReceita(data),
-                      trailing: PopupMenuButton(
-                        onSelected: (value) {
-                          if (value == 'editar') {
-                            selecionarReceita(data);
-                          } else {
-                            _excluir(data);
-                          }
-                        },
-                        itemBuilder: (context) => [
-                          PopupMenuItem(child: Text('Editar'), value: 'editar'),
-                          PopupMenuItem(
-                              child: Text('Excluir'), value: 'excluir'),
+                    leading: Icon(Icons.money),
+                    title: Text(data.valor),
+                    subtitle: Text(DateFormat('dd/MM/yyyy').format(
+                        DateTime.parse(
+                            data.data.replaceAll('-', '').toString()))),
+                    onTap: () => selecionarReceita(data),
+                    trailing: Container(
+                      width: 100,
+                      child: Row(
+                        children: <Widget>[
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            color: Colors.blue,
+                            onPressed: () => selecionarReceita(data),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            color: Colors.red,
+                            onPressed: () => _excluir(data),
+                          )
                         ],
                       ),
-                    ))
+                    )))
                 .toList(),
           ),
         ),

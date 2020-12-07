@@ -17,11 +17,20 @@ class ReceitaListPage extends StatefulWidget {
 
 class _ReceitaListPageState extends State<ReceitaListPage> {
   List<Receita> lista = new List();
+  String total = '0,00';
 
   @override
   void initState() {
     super.initState();
+    getTotalDespesas();
     obterTodos();
+  }
+
+  getTotalDespesas() {
+    ReceitaHelper()
+        .totalReceitas()
+        .then((res) => {total = res[0]['total'].toStringAsFixed(2)})
+        .catchError((e) => {print(e)});
   }
 
   void obterTodos() {
@@ -79,38 +88,47 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
         appBar: AppBar(
           title: Text('Receitas'),
         ),
-        body: Center(
-          child: ListView(
-            padding: EdgeInsets.all(10.0),
-            scrollDirection: Axis.vertical,
-            children: lista
-                .map((data) => ListTile(
-                    leading: Icon(Icons.money),
-                    title: Text(data.valor),
-                    subtitle: Text(DateFormat('dd/MM/yyyy').format(
-                        DateTime.parse(
-                            data.data.replaceAll('-', '').toString()))),
-                    onTap: () => selecionarReceita(data),
-                    trailing: Container(
-                      width: 100,
-                      child: Row(
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.edit),
-                            color: Colors.blue,
-                            onPressed: () => selecionarReceita(data),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.delete),
-                            color: Colors.red,
-                            onPressed: () => _excluir(data),
-                          )
-                        ],
-                      ),
-                    )))
-                .toList(),
+        body: Column(children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Text(
+              'Receita total R\$ $total',
+              style: TextStyle(fontSize: 20),
+            ),
           ),
-        ),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.all(10.0),
+              scrollDirection: Axis.vertical,
+              children: lista
+                  .map((data) => ListTile(
+                      leading: Icon(Icons.money),
+                      title: Text(data.valor),
+                      subtitle: Text(DateFormat('dd/MM/yyyy').format(
+                          DateTime.parse(
+                              data.data.replaceAll('-', '').toString()))),
+                      onTap: () => selecionarReceita(data),
+                      trailing: Container(
+                        width: 100,
+                        child: Row(
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(Icons.edit),
+                              color: Colors.blue,
+                              onPressed: () => selecionarReceita(data),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              color: Colors.red,
+                              onPressed: () => _excluir(data),
+                            )
+                          ],
+                        ),
+                      )))
+                  .toList(),
+            ),
+          ),
+        ]),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: _addReceita,
           label: Icon(Icons.add),

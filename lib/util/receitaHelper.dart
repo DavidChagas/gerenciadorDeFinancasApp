@@ -86,4 +86,11 @@ class ReceitaHelper {
 
     return listReceita;
   }
+
+  Future<List> totalReceitas() async {
+    Database dbDespesa = await db;
+    List total = await dbDespesa.rawQuery(
+        "SELECT SUM( REPLACE([valorCol],'R\$','') ) AS [total] FROM $receitaTable");
+    return total;
+  }
 }

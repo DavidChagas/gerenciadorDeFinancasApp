@@ -4,7 +4,7 @@ import 'package:gerenciadorDeFinancasApp/dominio/despesa.dart';
 import 'package:gerenciadorDeFinancasApp/pages/despesa/despesaEditPage.dart';
 import 'package:gerenciadorDeFinancasApp/pages/menu.dart';
 import 'package:gerenciadorDeFinancasApp/util/Dialogos.dart';
-import 'package:gerenciadorDeFinancasApp/util/DespesaHelper.dart';
+import 'package:gerenciadorDeFinancasApp/util/despesaHelper.dart';
 
 class DespesaListPage extends StatefulWidget {
   DespesaListPage({Key key, this.title}) : super(key: key);
@@ -17,7 +17,7 @@ class DespesaListPage extends StatefulWidget {
 
 class _DespesaListPageState extends State<DespesaListPage> {
   List<Despesa> lista = new List();
-  String total;
+  String total = '0,00';
 
   @override
   void initState() {

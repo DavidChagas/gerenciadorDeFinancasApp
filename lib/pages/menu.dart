@@ -2,11 +2,36 @@ import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Menu extends StatelessWidget {
+class Menu extends StatefulWidget {
+  @override
+  _MenuState createState() => _MenuState();
+}
+
+class _MenuState extends State<Menu> {
+  int indexselecionado = 1;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Navigator.popUntil(context, (route) {
+      switch (route.settings.name) {
+        case '/receita':
+          indexselecionado = 2;
+          break;
+        case '/home':
+          indexselecionado = 1;
+          break;
+        case '/despesa':
+          indexselecionado = 0;
+          break;
+      }
+      return true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    int indexselecionado = 1;
-
     void alteraIndex(index) {
       if (index == 2) {
         Navigator.of(context).pushNamed('/receita');

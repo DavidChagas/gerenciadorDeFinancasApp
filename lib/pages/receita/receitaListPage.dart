@@ -1,9 +1,10 @@
-import 'package:ff_navigation_bar/ff_navigation_bar.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gerenciadorDeFinancasApp/dominio/receita.dart';
 import 'package:gerenciadorDeFinancasApp/pages/menu.dart';
 import 'package:gerenciadorDeFinancasApp/pages/receita/receitaEditPage.dart';
 import 'package:gerenciadorDeFinancasApp/util/Dialogos.dart';
+import 'package:gerenciadorDeFinancasApp/util/receitaHelper.dart';
 
 class ReceitaListPage extends StatefulWidget {
   ReceitaListPage({Key key, this.title}) : super(key: key);
@@ -23,7 +24,14 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
     obterTodos();
   }
 
-  void obterTodos() {}
+  void obterTodos() {
+    ReceitaHelper().obterTodos().then((value) => {
+          setState(() {
+            print(value);
+            lista = value;
+          })
+        });
+  }
 
   void _addReceita() async {
     final res = await Navigator.of(context).push(MaterialPageRoute(
@@ -35,9 +43,30 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
     Dialogos.showToastSuccess(res);
   }
 
-  void selecionarReceita(Receita p) async {}
+  void selecionarReceita(Receita p) async {
+    final res = await Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => ReceitaEditPage(
+              objeto: p,
+            )));
+    obterTodos();
+    Dialogos.showToastSuccess(res);
+  }
 
-  void _excluir(Receita obj) {}
+  void _excluir(Receita obj) {
+    Dialogos.showConfirmDialog(
+        context,
+        'Confirma exclusão?',
+        () => {
+              ReceitaHelper()
+                  .excluir(obj.id)
+                  .then((value) =>
+                      {Dialogos.showToastSuccess('Excluído'), obterTodos()})
+                  .catchError((e) => {
+                        print(e),
+                        Dialogos.showToastError(e.toString()),
+                      })
+            });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +78,10 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
             scrollDirection: Axis.vertical,
             children: lista
                 .map((data) => ListTile(
-                      leading: Icon(Icons.person),
-                      title: Text(data.descricao),
+                      leading: Icon(Icons.money),
+                      title: Text(DateFormat('dd/MM/yyyy').format(
+                          DateTime.parse(
+                              data.data.replaceAll('-', '').toString()))),
                       onTap: () => selecionarReceita(data),
                       trailing: PopupMenuButton(
                         onSelected: (value) {
@@ -70,13 +101,12 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
                 .toList(),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton.extended(
           onPressed: _addReceita,
-          tooltip: 'Increment',
-          child: Icon(
-            Icons.person_add,
-          ), // This trailing comma makes auto-formatting nicer for build methods.
+          label: Icon(Icons.add),
+          backgroundColor: Colors.blue,
         ),
+        bottomNavigationBar: Menu(),
       );
     } else {
       return Scaffold(

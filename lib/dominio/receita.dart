@@ -1,6 +1,6 @@
 class Receita {
   int id;
-  DateTime data;
+  String data;
   String valor;
   String descricao;
   String recebido;

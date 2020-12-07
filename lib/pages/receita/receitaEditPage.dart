@@ -2,6 +2,7 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gerenciadorDeFinancasApp/dominio/receita.dart';
 import 'package:gerenciadorDeFinancasApp/pages/menu.dart';
+import 'package:gerenciadorDeFinancasApp/util/receitaHelper.dart';
 
 class ReceitaEditPage extends StatefulWidget {
   ReceitaEditPage({Key key, this.objeto}) : super(key: key);
@@ -26,14 +27,23 @@ class _ReceitaEditPageState extends State<ReceitaEditPage> {
 
   void _salvar() {
     if (obj.id == null) {
-      print('Inserindo');
+      ReceitaHelper()
+          .inserir(obj)
+          .then((value) => {Navigator.pop(context, 'salvou')})
+          .catchError((e) => {print(e)});
     } else {
-      print('Editando');
+      ReceitaHelper()
+          .alterar(obj)
+          .then((value) => {Navigator.pop(context, 'editou')})
+          .catchError((e) => {print(e)});
     }
   }
 
   void _excluir() {
-    print('Excluindo');
+    ReceitaHelper()
+        .excluir(obj.id)
+        .then((value) => {Navigator.pop(context, 'excluído')})
+        .catchError((e) => {print(e)});
   }
 
   void _cancelar() {
@@ -59,11 +69,13 @@ class _ReceitaEditPageState extends State<ReceitaEditPage> {
                       icon: Icon(Icons.calendar_today),
                       border: OutlineInputBorder(),
                       labelText: 'Data'),
-                  initialValue: '',
+                  initialValue: obj.data,
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2100),
                   dateLabelText: 'Date',
-                  onChanged: (val) => print(val),
+                  onChanged: (val) {
+                    obj.data = val;
+                  },
                   validator: (val) {
                     print(val);
                     return null;
@@ -107,6 +119,7 @@ class _ReceitaEditPageState extends State<ReceitaEditPage> {
                             value: opcao, child: new Text(opcao)))
                         .toList(),
                     onChanged: (text) {
+                      print(text);
                       obj.recebido = text;
                     },
                   ),

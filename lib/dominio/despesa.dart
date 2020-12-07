@@ -1,7 +1,7 @@
 class Despesa {
   int id;
-  DateTime data;
-  int valor;
+  String data;
+  String valor;
   String descricao;
   String pago;
 

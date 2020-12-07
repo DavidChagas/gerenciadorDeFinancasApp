@@ -10,6 +10,13 @@ final String valorCol = "valorCol";
 final String descricaoCol = "descricaoCol";
 final String recebidoCol = "recebidoCol";
 
+final String despesaTable = "despesas";
+final String idColDespesa = "idCol";
+final String dataColDespesa = "dataCol";
+final String valorColDespesa = "valorCol";
+final String descricaoColDespesa = "descricaoCol";
+final String pagoColDespesa = "pagoCol";
+
 class ReceitaHelper {
   static final ReceitaHelper _instance = ReceitaHelper.internal();
   factory ReceitaHelper() => _instance;
@@ -32,6 +39,8 @@ class ReceitaHelper {
         onCreate: (Database db, int newerVersion) async {
       await db.execute(
           "CREATE TABLE $receitaTable ($idCol INTEGER PRIMARY KEY AUTOINCREMENT, $dataCol TEXT, $valorCol TEXT, $descricaoCol TEXT, $recebidoCol TEXT)");
+      await db.execute(
+          "CREATE TABLE $despesaTable ($idColDespesa INTEGER PRIMARY KEY AUTOINCREMENT, $dataColDespesa TEXT, $valorColDespesa TEXT, $descricaoColDespesa TEXT, $pagoColDespesa TEXT)");
     });
   }
 

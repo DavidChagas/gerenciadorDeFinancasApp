@@ -14,7 +14,9 @@ class Menu extends StatelessWidget {
       if (index == 1) {
         Navigator.of(context).pushNamed('/home');
       }
-      print('chegouuu top');
+      if (index == 0) {
+        Navigator.of(context).pushNamed('/despesa');
+      }
 
       indexselecionado = index;
       print(indexselecionado);

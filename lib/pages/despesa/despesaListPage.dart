@@ -1,22 +1,22 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:gerenciadorDeFinancasApp/dominio/receita.dart';
+import 'package:gerenciadorDeFinancasApp/dominio/despesa.dart';
+import 'package:gerenciadorDeFinancasApp/pages/despesa/despesaEditPage.dart';
 import 'package:gerenciadorDeFinancasApp/pages/menu.dart';
-import 'package:gerenciadorDeFinancasApp/pages/receita/receitaEditPage.dart';
 import 'package:gerenciadorDeFinancasApp/util/Dialogos.dart';
-import 'package:gerenciadorDeFinancasApp/util/receitaHelper.dart';
+import 'package:gerenciadorDeFinancasApp/util/DespesaHelper.dart';
 
-class ReceitaListPage extends StatefulWidget {
-  ReceitaListPage({Key key, this.title}) : super(key: key);
+class DespesaListPage extends StatefulWidget {
+  DespesaListPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _ReceitaListPageState createState() => _ReceitaListPageState();
+  _DespesaListPageState createState() => _DespesaListPageState();
 }
 
-class _ReceitaListPageState extends State<ReceitaListPage> {
-  List<Receita> lista = new List();
+class _DespesaListPageState extends State<DespesaListPage> {
+  List<Despesa> lista = new List();
 
   @override
   void initState() {
@@ -25,7 +25,7 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
   }
 
   void obterTodos() {
-    ReceitaHelper().obterTodos().then((value) => {
+    DespesaHelper().obterTodos().then((value) => {
           setState(() {
             lista = value;
             montaFiltro();
@@ -34,34 +34,34 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
   }
 
   void montaFiltro() {
-    lista.forEach((receita) => {print(receita.data)});
+    lista.forEach((despesa) => {print(despesa.data)});
   }
 
-  void _addReceita() async {
+  void _addDespesa() async {
     final res = await Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => ReceitaEditPage(
-              objeto: new Receita(),
+        builder: (context) => DespesaEditPage(
+              objeto: new Despesa(),
             )));
     //print(res);
     obterTodos();
     Dialogos.showToastSuccess(res);
   }
 
-  void selecionarReceita(Receita p) async {
+  void selecionarDespesa(Despesa p) async {
     final res = await Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => ReceitaEditPage(
+        builder: (context) => DespesaEditPage(
               objeto: p,
             )));
     obterTodos();
     Dialogos.showToastSuccess(res);
   }
 
-  void _excluir(Receita obj) {
+  void _excluir(Despesa obj) {
     Dialogos.showConfirmDialog(
         context,
         'Confirma exclusão?',
         () => {
-              ReceitaHelper()
+              DespesaHelper()
                   .excluir(obj.id)
                   .then((value) =>
                       {Dialogos.showToastSuccess('Excluído'), obterTodos()})
@@ -77,7 +77,7 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
     if (lista.length > 0) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Receitas'),
+          title: Text('Despesas'),
         ),
         body: Center(
           child: ListView(
@@ -90,7 +90,7 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
                     subtitle: Text(DateFormat('dd/MM/yyyy').format(
                         DateTime.parse(
                             data.data.replaceAll('-', '').toString()))),
-                    onTap: () => selecionarReceita(data),
+                    onTap: () => selecionarDespesa(data),
                     trailing: Container(
                       width: 100,
                       child: Row(
@@ -98,7 +98,7 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
                           IconButton(
                             icon: Icon(Icons.edit),
                             color: Colors.blue,
-                            onPressed: () => selecionarReceita(data),
+                            onPressed: () => selecionarDespesa(data),
                           ),
                           IconButton(
                             icon: Icon(Icons.delete),
@@ -112,7 +112,7 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: _addReceita,
+          onPressed: _addDespesa,
           label: Icon(Icons.add),
           backgroundColor: Colors.blue,
         ),
@@ -121,9 +121,9 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
     } else {
       return Scaffold(
         body: Center(
-            child: Text('Você não possui nenhuma receita cadastrada ainda :(')),
+            child: Text('Você não possui nenhuma despesa cadastrada ainda :)')),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: _addReceita,
+          onPressed: _addDespesa,
           label: Icon(Icons.add),
           backgroundColor: Colors.blue,
         ),

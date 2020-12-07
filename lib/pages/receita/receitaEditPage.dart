@@ -1,3 +1,4 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gerenciadorDeFinancasApp/dominio/receita.dart';
@@ -89,6 +90,9 @@ class _ReceitaEditPageState extends State<ReceitaEditPage> {
                         icon: Icon(Icons.money),
                         border: OutlineInputBorder(),
                         labelText: 'Valor'),
+                    inputFormatters: [
+                      CurrencyTextInputFormatter(symbol: 'R\$')
+                    ],
                     keyboardType: TextInputType.number,
                     initialValue: obj.valor,
                     onChanged: (text) {

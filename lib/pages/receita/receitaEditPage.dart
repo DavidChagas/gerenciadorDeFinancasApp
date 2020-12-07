@@ -54,7 +54,7 @@ class _ReceitaEditPageState extends State<ReceitaEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Adicionar receita'),
+        title: Text(obj.id != null ? 'Editar Receita' : 'Cadastrar Receita'),
       ),
       body: SingleChildScrollView(
         child: Container(

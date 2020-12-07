@@ -72,6 +72,9 @@ class _ReceitaListPageState extends State<ReceitaListPage> {
   Widget build(BuildContext context) {
     if (lista.length > 0) {
       return Scaffold(
+        appBar: AppBar(
+          title: Text('Receitas'),
+        ),
         body: Center(
           child: ListView(
             padding: EdgeInsets.all(10.0),

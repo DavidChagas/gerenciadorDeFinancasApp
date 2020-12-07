@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    int indexselecionado = 0;
+    int indexselecionado = 1;
 
     void alteraIndex(index) {
       if (index == 2) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gerenciadorDeFinancasApp/pages/despesa/despesaListPage.dart';
 import 'package:gerenciadorDeFinancasApp/pages/home.dart';
-import 'package:gerenciadorDeFinancasApp/pages/receita/receitaEditPage.dart';
 import 'package:gerenciadorDeFinancasApp/pages/receita/receitaListPage.dart';
 
 void main() {

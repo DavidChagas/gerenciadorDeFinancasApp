@@ -119,6 +119,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.1.5"
+  graphic:
+    dependency: "direct main"
+    description:
+      name: graphic
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
   intl:
     dependency: transitive
     description:

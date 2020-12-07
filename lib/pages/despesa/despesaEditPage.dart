@@ -116,16 +116,33 @@ class _DespesaEditPageState extends State<DespesaEditPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5.0),
-                  child: DropdownButton(
-                    value: obj.pago,
-                    items: opcoes
-                        .map((opcao) => new DropdownMenuItem(
-                            value: opcao, child: new Text(opcao)))
-                        .toList(),
-                    onChanged: (text) {
-                      print(text);
-                      obj.pago = text;
-                    },
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: const Text('Pago'),
+                        leading: Radio(
+                          value: 'Pago',
+                          groupValue: obj.pago,
+                          onChanged: (value) {
+                            setState(() {
+                              obj.pago = value;
+                            });
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: const Text('Pendente'),
+                        leading: Radio(
+                          value: 'Pendente',
+                          groupValue: obj.pago,
+                          onChanged: (value) {
+                            setState(() {
+                              obj.pago = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Padding(

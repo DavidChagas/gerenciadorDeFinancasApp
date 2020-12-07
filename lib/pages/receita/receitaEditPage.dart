@@ -116,16 +116,33 @@ class _ReceitaEditPageState extends State<ReceitaEditPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5.0),
-                  child: DropdownButton(
-                    value: obj.recebido,
-                    items: opcoes
-                        .map((opcao) => new DropdownMenuItem(
-                            value: opcao, child: new Text(opcao)))
-                        .toList(),
-                    onChanged: (text) {
-                      print(text);
-                      obj.recebido = text;
-                    },
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: const Text('Recebido'),
+                        leading: Radio(
+                          value: 'Recebido',
+                          groupValue: obj.recebido,
+                          onChanged: (value) {
+                            setState(() {
+                              obj.recebido = value;
+                            });
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: const Text('Pendente'),
+                        leading: Radio(
+                          value: 'Pendente',
+                          groupValue: obj.recebido,
+                          onChanged: (value) {
+                            setState(() {
+                              obj.recebido = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Padding(
